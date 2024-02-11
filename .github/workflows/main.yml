@@ -1,0 +1,5 @@
+- name: Use OpenAI API Key
+  env:
+    OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  run: |
+    echo "Using API Key: $OPENAI_API_KEY"
