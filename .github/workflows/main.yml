@@ -19,7 +19,7 @@ jobs:
           node-version: '14'
 
       - name: Call JavaScript function
-        run: node your_script.js "YOUR_OPENAI_API_KEY_HERE"
+        run: node your_script.js "OPENAI_API_KEY"
 
       - name: Use OpenAI API Key
         env:
