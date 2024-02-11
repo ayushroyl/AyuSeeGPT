@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/90JMh43w/oie-jpg.png">
-    <title>AyuSee AI Bot</title>
+    <title>AyuSeeGPT</title>
     <style>
       * {
         margin: 0;
@@ -114,7 +114,7 @@
 </head>
 <body>
     <video autoplay muted loop id="myVideo">
-     <source src="https://istatic.videezy.com/system/resources/previews/000/007/313/original/Plexus.mp4" type="video/mp4">
+     <source src="vid.mp4.mp4" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
     <div class="container">
@@ -125,7 +125,7 @@
         </header>
         <div id="chatBox" class="chat-box">
             <div class="output">
-                Hi there 👋
+                Hi there 👋<br>I'm a vertual assistent of Ayush.<br>How can I help you today?
             </div>
             <div class="input"></div>
         </div>
@@ -145,7 +145,19 @@
             sendMessage();
         }
     }
-
+    function typeWriter(text, elementId, delay) {
+        let i = 0;
+        const outputElement = document.getElementById(elementId);
+    
+        function type() {
+            if (i < text.length) {
+                outputElement.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, delay);
+            }
+        }
+        type();
+    }
     async function sendMessage() {
         var userInput = document.getElementById('userInput').value.trim();
         if (userInput !== '') {
@@ -153,13 +165,14 @@
             appendMessage(userInput, 'input');
             // Clear input-box
             document.getElementById('userInput').value = '';
-            
+            // scroll updated in chatbot
+            $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
             await getOpenAIResponse(userInput);
         }
     }
 
     async function getOpenAIResponse(userInput) {
-        const apiKey = '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';
+        const apiKey = process.env.OPENAI_API_KEY;
         const prompt = userInput;
         const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
@@ -170,14 +183,14 @@
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: 'gpt-3.5-turbo-0613', // Specify the model you want to use
+                model: 'gpt-3.5-turbo', // Specify the model you want to use
                 messages: [
                     {
                         role: 'user',
                         content: prompt
                     }
                 ],
-                temperature: 0.7,
+                temperature: 0.1,
                 top_p: 0.9,
                 max_tokens: 50
             })
