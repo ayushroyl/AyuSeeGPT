@@ -179,7 +179,7 @@
             // scroll updated in chatbot
             $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
             // Make a POST request to the backend API
-            const response = await fetch('/get_response', {
+            const response = await fetch('https://localhost:5000/get_response', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
